@@ -1,0 +1,15 @@
+# Trivy ignore file for EPR Co-Pilot
+# Add CVE IDs that should be ignored during scanning
+
+# Example: Ignore a specific CVE that doesn't affect our use case
+# CVE-2023-12345
+
+# Ignore low severity vulnerabilities in development dependencies
+# (Uncomment and modify as needed)
+# CVE-2023-*
+
+# Ignore vulnerabilities in test files
+**/test/**
+**/tests/**
+**/*.test.*
+**/*.spec.*

@@ -1,0 +1,75 @@
+repos:
+  - repo: local
+    hooks:
+      - id: frontend-lint
+        name: Frontend ESLint
+        entry: bash -c 'cd frontend && npm run lint'
+        language: system
+        files: ^frontend/.*\.(ts|tsx|js|jsx)$
+        pass_filenames: false
+
+      - id: frontend-format-check
+        name: Frontend Prettier Check
+        entry: bash -c 'cd frontend && npm run format:check'
+        language: system
+        files: ^frontend/.*\.(ts|tsx|js|jsx|json|css|md)$
+        pass_filenames: false
+
+      - id: frontend-type-check
+        name: Frontend TypeScript Check
+        entry: bash -c 'cd frontend && npx tsc --noEmit'
+        language: system
+        files: ^frontend/.*\.(ts|tsx)$
+        pass_filenames: false
+
+  - repo: local
+    hooks:
+      - id: backend-ruff-check
+        name: Backend Ruff Check
+        entry: bash -c 'cd backend && poetry run ruff check .'
+        language: system
+        files: ^backend/.*\.py$
+        pass_filenames: false
+
+      - id: backend-ruff-format
+        name: Backend Ruff Format
+        entry: bash -c 'cd backend && poetry run ruff format --check .'
+        language: system
+        files: ^backend/.*\.py$
+        pass_filenames: false
+
+      - id: backend-mypy
+        name: Backend MyPy Type Check
+        entry: bash -c 'cd backend && poetry run mypy .'
+        language: system
+        files: ^backend/.*\.py$
+        pass_filenames: false
+
+      - id: backend-bandit
+        name: Backend Security Check (Bandit)
+        entry: bash -c 'cd backend && poetry run bandit -r . -f json'
+        language: system
+        files: ^backend/.*\.py$
+        pass_filenames: false
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+      - id: check-merge-conflict
+      - id: check-json
+      - id: pretty-format-json
+        args: ['--autofix']
+
+  - repo: https://github.com/trufflesecurity/trufflehog
+    rev: v3.82.6
+    hooks:
+      - id: trufflehog
+        name: TruffleHog
+        description: Detect secrets in your data.
+        entry: bash -c 'trufflehog git file://. --since-commit HEAD --only-verified --fail'
+        language: system
+        stages: ["commit", "push"]

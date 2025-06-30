@@ -1,0 +1,46 @@
+# Git
+.git
+.gitignore
+
+# Documentation
+README.md
+*.md
+
+# Environment files
+.env
+.env.local
+.env.example
+
+# Dependencies
+node_modules
+__pycache__
+*.pyc
+.pytest_cache
+
+# Build outputs
+dist
+build
+.next
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs
+
+# Coverage
+coverage
+.coverage
+.nyc_output
+
+# Temporary files
+tmp
+temp
